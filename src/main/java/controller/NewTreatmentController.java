@@ -3,11 +3,13 @@ package controller;
 import datastorage.DAOFactory;
 import datastorage.TreatmentDAO;
 import javafx.fxml.FXML;
+import javafx.scene.CacheHint;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Caregiver;
 import model.Patient;
 import model.Treatment;
 import utils.DateConverter;
@@ -33,11 +35,13 @@ public class NewTreatmentController {
 
     private AllTreatmentController controller;
     private Patient patient;
+    private Caregiver caregiver;
     private Stage stage;
 
-    public void initialize(AllTreatmentController controller, Stage stage, Patient patient) {
+    public void initialize(AllTreatmentController controller, Stage stage, Patient patient, Caregiver caregiver) {
         this.controller= controller;
         this.patient = patient;
+        this.caregiver = caregiver;
         this.stage = stage;
         showPatientData();
     }
@@ -55,7 +59,7 @@ public class NewTreatmentController {
         LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), date,
+        Treatment treatment = new Treatment(patient.getPid(), caregiver.getCid(), date,
                 begin, end, description, remarks);
         createTreatment(treatment);
         controller.readAllAndShowInTableView();

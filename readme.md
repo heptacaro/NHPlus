@@ -1,11 +1,6 @@
 # NHPlus
 
-##Erarbeitete Funktionen
-
-- Caregiver hat alle Testfälle bestanden:
- - Es werden alle Pflegekräfte, die in der Datenbank gespeichert sind, mit ihrer ID, Nachnamen, Vornamen und Telefonnummer in einer TableView angezeigt
- - Unter jeder Behandlung wird ein Pflegekraft-Label, das Nachname, Vorname und Telefonnummer der verantwortlichen Pflegekraft beinhaltet, angezeigt.
- - Eine neue Behandlung wird angelegt und korrekt (inklusive Pfleger) gespeichert sowie angezeigt.
+##Fehlende/Fehlerhafte Funktionen
 
 - Login funktioniert nicht richtig, weshalb die Funktionen dafür noch auf dem dafür erstellten Branch liegen. Werden die Änderungen vorgenommen, kann beim Erstellen einer neuen Behandlung kein Caregiver hinzugefügt werden und das Erstellen der Behandlung nicht abgeschlossen werden.
 

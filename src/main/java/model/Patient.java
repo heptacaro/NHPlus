@@ -13,6 +13,7 @@ public class Patient extends Person {
     private LocalDate dateOfBirth;
     private String careLevel;
     private String roomnumber;
+    private String assets;
     private List<Treatment> allTreatments = new ArrayList<Treatment>();
 
     /**
@@ -22,12 +23,14 @@ public class Patient extends Person {
      * @param dateOfBirth
      * @param careLevel
      * @param roomnumber
+     * @param assets
      */
-    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber) {
+    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber, String assets) {
         super(firstName, surname);
         this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
         this.roomnumber = roomnumber;
+        this.assets = assets;
     }
 
     /**
@@ -38,13 +41,15 @@ public class Patient extends Person {
      * @param dateOfBirth
      * @param careLevel
      * @param roomnumber
+     * @param assets
      */
-    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber) {
+    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber, String assets) {
         super(firstName, surname);
         this.pid = pid;
         this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
         this.roomnumber = roomnumber;
+        this.assets = assets;
     }
 
     /**
@@ -104,13 +109,21 @@ public class Patient extends Person {
         this.roomnumber = roomnumber;
     }
 
-    @Deprecated
+    /**
+     *
+     * @return assets as string
+     */
     public String getAssets() {
-        return "";
+        return assets;
     }
 
-    @Deprecated
-    public void setAssets(String assets) {}
+    /**
+     *
+     * @param assets
+     */
+    public void setAssets(String assets) {
+        this.assets = assets;
+    }
 
     /**
      * adds a treatment to the treatment-list, if it does not already contain it.
@@ -136,6 +149,7 @@ public class Patient extends Person {
                 "\nBirthday: " + this.dateOfBirth +
                 "\nCarelevel: " + this.careLevel +
                 "\nRoomnumber: " + this.roomnumber +
+                "\nAssets: " + this.assets +
                 "\n";
     }
 }

@@ -69,7 +69,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
     /**
      * maps a <code>ResultSet</code> to a <code>Caregiver-List</code>
      *
-     * @param result ResultSet with a multiple rows. Data will be mapped to caregiver-object.
+     * @param result ResultSet with multiple rows. Data will be mapped to caregiver-object.
      * @return ArrayList with caregivers from the resultSet.
      */
     @Override

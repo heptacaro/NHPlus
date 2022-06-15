@@ -19,8 +19,8 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected String getCreateStatementString(Treatment treatment) {
-        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks) VALUES " +
-                "(%d, '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getDate(),
+        return String.format("INSERT INTO treatment (pid, cid, treatment_date, begin, end, description, remarks) VALUES " +
+                "(%d, %d, '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getCid(), treatment.getDate(),
                 treatment.getBegin(), treatment.getEnd(), treatment.getDescription(),
                 treatment.getRemarks());
     }
@@ -32,12 +32,11 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected Treatment getInstanceFromResultSet(ResultSet result) throws SQLException {
-        LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
-        LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
-        LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
-        Treatment m = new Treatment(result.getLong(1), result.getLong(2),
-                date, begin, end, result.getString(6), result.getString(7));
-        return m;
+        LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
+        LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(5));
+        LocalTime end = DateConverter.convertStringToLocalTime(result.getString(6));
+        return new Treatment(result.getLong(1), result.getLong(2), result.getLong(3),
+                date, begin, end, result.getString(7), result.getString(8));
     }
 
     @Override
@@ -48,22 +47,16 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     @Override
     protected ArrayList<Treatment> getListFromResultSet(ResultSet result) throws SQLException {
         ArrayList<Treatment> list = new ArrayList<Treatment>();
-        Treatment t = null;
         while (result.next()) {
-            LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
-            LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
-            LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
-            t = new Treatment(result.getLong(1), result.getLong(2),
-                    date, begin, end, result.getString(6), result.getString(7));
-            list.add(t);
+            list.add(getInstanceFromResultSet(result));
         }
         return list;
     }
 
     @Override
     protected String getUpdateStatementString(Treatment treatment) {
-        return String.format("UPDATE treatment SET pid = %d, treatment_date ='%s', begin = '%s', end = '%s'," +
-                "description = '%s', remarks = '%s' WHERE tid = %d", treatment.getPid(), treatment.getDate(),
+        return String.format("UPDATE treatment SET pid = %d, cid = %d, treatment_date ='%s', begin = '%s', end = '%s'," +
+                "description = '%s', remarks = '%s' WHERE tid = %d", treatment.getPid(), treatment.getCid(), treatment.getDate(),
                 treatment.getBegin(), treatment.getEnd(), treatment.getDescription(), treatment.getRemarks(),
                 treatment.getTid());
     }
@@ -75,7 +68,6 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     public List<Treatment> readTreatmentsByPid(long pid) throws SQLException {
         ArrayList<Treatment> list = new ArrayList<Treatment>();
-        Treatment object = null;
         Statement st = conn.createStatement();
         ResultSet result = st.executeQuery(getReadAllTreatmentsOfOnePatientByPid(pid));
         list = getListFromResultSet(result);
@@ -89,5 +81,29 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     public void deleteByPid(long key) throws SQLException {
         Statement st = conn.createStatement();
         st.executeUpdate(String.format("Delete FROM treatment WHERE pid= %d", key));
+    }
+
+    public List<Treatment> readTreatmentsByCid(long cid) throws SQLException {
+        ArrayList<Treatment> list = new ArrayList<Treatment>();
+        Statement st = conn.createStatement();
+        ResultSet result = st.executeQuery(getReadAllTreatmentsOfOnePatientByCid(cid));
+        list = getListFromResultSet(result);
+        return list;
+    }
+
+    private String getReadAllTreatmentsOfOnePatientByCid(long cid){
+        return String.format("SELECT * FROM treatment WHERE cid = %d", cid);
+    }
+
+    public List<Treatment> readTreatmentsByBothIds(long cid, long pid) throws SQLException {
+        ArrayList<Treatment> list = new ArrayList<Treatment>();
+        Statement st = conn.createStatement();
+        ResultSet result = st.executeQuery(getReadAllTreatmentsOfOnePatientByBothIds(cid, pid));
+        list = getListFromResultSet(result);
+        return list;
+    }
+
+    private String getReadAllTreatmentsOfOnePatientByBothIds(long cid, long pid){
+        return String.format("SELECT * FROM treatment WHERE cid = %d AND pid = %d", cid, pid);
     }
 }

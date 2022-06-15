@@ -48,6 +48,11 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
+             <Label text="Pfleger:" GridPane.rowIndex="1">
+                 <font>
+                     <Font name="System Bold" size="13.0" />
+                 </font>
+             </Label>
             <Label text="Datum:" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="13.0" />
@@ -73,6 +78,8 @@
             <TextField fx:id="txtDescription" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <DatePicker fx:id="datepicker" prefWidth="192.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="lblPatientName" text="Name" GridPane.columnIndex="1" />
+            <Label fx:id="lblCaregiverName" text="Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lblCaregiverPhone" text="Telefon" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label fx:id="lblCarelevel" text="Pflegestufe" GridPane.columnIndex="3" />
          </children>
       </GridPane>

@@ -27,8 +27,8 @@ public class CaregiverDAO extends DAOimp<model.Caregiver> {
      */
     @Override
     protected String getCreateStatementString(model.Caregiver caregiver) {
-        return String.format("INSERT INTO caregiver (firstname, surname, phone, loginUsername, loginPassword) VALUES ('%s', '%s', '%s', '%s', '%s')",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhone(), caregiver.getLoginUsername(), caregiver.getLoginPassword());
+        return String.format("INSERT INTO caregiver (firstname, surname, phone) VALUES ('%s', '%s', '%s')",
+                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhone());
     }
 
     /**
@@ -52,7 +52,7 @@ public class CaregiverDAO extends DAOimp<model.Caregiver> {
     protected model.Caregiver getInstanceFromResultSet(ResultSet result) throws SQLException {
         model.Caregiver c = null;
         c = new model.Caregiver(result.getInt(1), result.getString(2),
-                result.getString(3), result.getString(4), result.getString(5), result.getString(6));
+                result.getString(3), result.getString(4));
         return c;
     }
 
@@ -89,8 +89,8 @@ public class CaregiverDAO extends DAOimp<model.Caregiver> {
      */
     @Override
     protected String getUpdateStatementString(model.Caregiver caregiver) {
-        return String.format("UPDATE caregiver SET firstname = '%s', surname = '%s', phone = '%s', loginUsername = '%s' WHERE cid = %d",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhone(), caregiver.getLoginUsername(), caregiver.getCid());
+        return String.format("UPDATE caregiver SET firstname = '%s', surname = '%s', phone = '%s' WHERE cid = %d",
+                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhone(), caregiver.getCid());
     }
 
     /**

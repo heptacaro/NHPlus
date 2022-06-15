@@ -19,7 +19,33 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        loginWindow();
         mainWindow();
+    }
+
+    public void loginWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/LoginWindowView.fxml"));
+            BorderPane pane = loader.load();
+
+            Scene login = new Scene(pane);
+            this.primaryStage.setTitle("Login");
+            this.primaryStage.setScene(login);
+            this.primaryStage.setResizable(false);
+            this.primaryStage.show();
+
+            this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent e) {
+                    ConnectionBuilder.closeConnection();
+                    Platform.exit();
+                    System.exit(0);
+                }
+            });
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void mainWindow() {

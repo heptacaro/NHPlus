@@ -32,6 +32,8 @@ public class AllCaregiverController {
     private TableColumn<Caregiver, String> colSurname;
     @FXML
     private TableColumn<Caregiver, String> colPhone;
+    @FXML
+    private TableColumn<model.Caregiver, String> colUsername;
 
     @FXML
     Button btnDelete;
@@ -43,6 +45,10 @@ public class AllCaregiverController {
     TextField txtFirstname;
     @FXML
     TextField txtPhone;
+    @FXML
+    javafx.scene.control.TextField loginUsername;
+    @FXML
+    javafx.scene.control.TextField loginPassword;
 
     private ObservableList<Caregiver> tableviewContent = FXCollections.observableArrayList();
     private CaregiverDAO dao;
@@ -63,7 +69,10 @@ public class AllCaregiverController {
 
         this.colPhone.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("phone"));
         this.colPhone.setCellFactory(TextFieldTableCell.forTableColumn());
-        
+
+        this.colUsername.setCellValueFactory(new PropertyValueFactory<model.Caregiver, String>("username"));
+        this.colUsername.setCellFactory(TextFieldTableCell.forTableColumn());
+
         this.tableView.setItems(this.tableviewContent);
     }
 
@@ -94,6 +103,16 @@ public class AllCaregiverController {
     @FXML
     public void handleOnEditPhone(TableColumn.CellEditEvent<Caregiver, String> event){
         event.getRowValue().setPhone(event.getNewValue());
+        doUpdate(event);
+    }
+
+    /**
+     * handles new username value
+     * @param event event including the value that a user entered into the cell
+     */
+    @FXML
+    public void handleOnEditUsername(TableColumn.CellEditEvent<model.Caregiver, String> event){
+        event.getRowValue().setLoginUsername(event.getNewValue());
         doUpdate(event);
     }
 

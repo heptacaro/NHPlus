@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class CaregiverDAO extends DAOimp<Caregiver> {
+public class CaregiverDAO extends DAOimp<model.Caregiver> {
     /**
      * constructs Object. Calls the Constructor from <code>DAOImp</code> to store the connection.
      *
@@ -26,9 +26,9 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      * @return <code>String</code> with the generated SQL.
      */
     @Override
-    protected String getCreateStatementString(Caregiver caregiver) {
-        return String.format("INSERT INTO caregiver (firstname, surname, phone) VALUES ('%s', '%s', '%s')",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhone());
+    protected String getCreateStatementString(model.Caregiver caregiver) {
+        return String.format("INSERT INTO caregiver (firstname, surname, phone, loginUsername, loginPassword) VALUES ('%s', '%s', '%s', '%s', '%s')",
+                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhone(), caregiver.getLoginUsername(), caregiver.getLoginPassword());
     }
 
     /**
@@ -49,10 +49,10 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      * @return caregiver with the data from the resultSet.
      */
     @Override
-    protected Caregiver getInstanceFromResultSet(ResultSet result) throws SQLException {
-        Caregiver c = null;
-        c = new Caregiver(result.getInt(1), result.getString(2),
-                result.getString(3), result.getString(4));
+    protected model.Caregiver getInstanceFromResultSet(ResultSet result) throws SQLException {
+        model.Caregiver c = null;
+        c = new model.Caregiver(result.getInt(1), result.getString(2),
+                result.getString(3), result.getString(4), result.getString(5), result.getString(6));
         return c;
     }
 
@@ -73,8 +73,8 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      * @return ArrayList with caregivers from the resultSet.
      */
     @Override
-    protected ArrayList<Caregiver> getListFromResultSet(ResultSet result) throws SQLException {
-        ArrayList<Caregiver> list = new ArrayList<Caregiver>();
+    protected ArrayList<model.Caregiver> getListFromResultSet(ResultSet result) throws SQLException {
+        ArrayList<model.Caregiver> list = new ArrayList<model.Caregiver>();
         while (result.next()) {
             list.add(getInstanceFromResultSet(result));
         }
@@ -88,9 +88,9 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      * @return <code>String</code> with the generated SQL.
      */
     @Override
-    protected String getUpdateStatementString(Caregiver caregiver) {
-        return String.format("UPDATE caregiver SET firstname = '%s', surname = '%s', phone = '%s' WHERE cid = %d",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhone(), caregiver.getCid());
+    protected String getUpdateStatementString(model.Caregiver caregiver) {
+        return String.format("UPDATE caregiver SET firstname = '%s', surname = '%s', phone = '%s', loginUsername = '%s' WHERE cid = %d",
+                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhone(), caregiver.getLoginUsername(), caregiver.getCid());
     }
 
     /**
